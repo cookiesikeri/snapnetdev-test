@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CitizenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +14,14 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('/login', [HomeController::class, 'login'])->name('login');
-Route::get('/', [DashboardController::class, 'index']);
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
-Route::post('/login', [HomeController::class, 'loginSubmit'])->name('login.submit');
-Route::get('/dashboard', [DashboardController::class, 'Index'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/user/details/{id}', [DashboardController::class, 'Userdetails'])->name('user.details');
-Route::get('/user/rider/{id}', [DashboardController::class, 'DeleteUser'])->name('user.delete');
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('citizen');
+Route::post('/citizens', [App\Http\Controllers\CitizenController::class, 'store'])->name('citizens.store');
+Route::get('/citizens', [App\Http\Controllers\CitizenController::class, 'search'])->name('citizens.search');
+Route::post('/searchcitizens', [App\Http\Controllers\CitizenController::class, 'searchCitizens'])->name('citizens.searchCitizens');
+Route::get('/citizens/{citizen}', [App\Http\Controllers\CitizenController::class, 'show'])->name('citizens.show');
